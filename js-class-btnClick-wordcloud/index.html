@@ -5,9 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>wordCloud</title>
+    <!-- <script type="module" src="./assets/component/class-ClickBtn.js"></script> -->
   </head>
   <body>
-    <div id="wordcloud" style="width: 500px; height: 500px"></div>
-    가나다라
+    <div>
+      <button type="button" class="js-data-button" data-idx="1">데이터1</button>
+      <button type="button" class="js-data-button" data-idx="2">데이터2</button>
+      <button type="button" class="js-data-button" data-idx="3">데이터3</button>
+    </div>
+    <div id="chartdiv" style="width: 500px; height: 500px"></div>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script type="module">
+      import { RoundColumnChart } from './assets/component/class-ClickBtn.js';
+      roundColumnChart.draw('chartdiv', []);
+    </script>
+    <!-- <script>
+      let clickDataBind = new ClickDataBind();
+      let $btns = document.querySelectorAll('.js-data-button');
+      let newData = new Array();
+      for (let i = 0; i < $btns.length; i++) {
+        let queryIdx = $btns[i].getAttribute('data-idx');
+        // $btns[i].addEventListener('click', (_ev) => clickDataBind.init(queryIdx, yAxis));
+        $btns[i].addEventListener('click', (_ev) => {
+          clickDataBind.init(queryIdx, series2);
+        });
+      }
+    </script> -->
   </body>
 </html>
