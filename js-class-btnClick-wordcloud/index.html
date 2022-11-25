@@ -206,34 +206,33 @@
     </script>
     <script>
       let roundColumnChart = new RoundColumnChart();
-      // roundColumnChart.data = [];
 
       // 데이터 값이 바뀔때
       let $btns = document.querySelectorAll('.js-data-button');
       for (let i = 0; i < $btns.length; i++) {
-        let queryIdx = $btns[i].getAttribute('data-idx');
-        let categoryIdx = $btns[i].getAttribute('data-category');
+        let queryIdx;
+        let categoryIdx;
+        let src;
         $btns[i].addEventListener('click', (_ev) => {
           if ($btns[i].attributes['data-idx']) {
-            fetch('assets/component/exdata.json')
-              .then((response) => response.json())
-              .then((_data) => {
-                _data.filter(function (_obj) {
-                  _obj.idx == queryIdx ? roundColumnChart.reDraw(_obj.data) : null;
-                });
-              });
+            // 카테고리명이 바뀌지않는, 데이터 값만 바뀌는 JSON 호출
+            src = 'exdata.json';
+            queryIdx = $btns[i].getAttribute('data-idx');
           } else if ($btns[i].attributes['data-category']) {
-            fetch('assets/component/exdata2.json')
-              .then((response) => response.json())
-              .then((_data) => {
-                _data.filter(function (_obj) {
-                  _obj.idx == categoryIdx ? roundColumnChart.reDraw(_obj.data) : null;
-                });
-              });
+            // 카테고리명 + 데이터 값 전체적으로 바뀌는 JSON 호출
+            src = 'exdata2.json';
+            queryIdx = $btns[i].getAttribute('data-category');
           }
+
+          fetch('assets/JSON/' + src)
+            .then((response) => response.json())
+            .then((_data) => {
+              _data.filter(function (_obj) {
+                _obj.idx == queryIdx ? roundColumnChart.reDraw(_obj.data) : null;
+              });
+            });
         });
       }
-      // _obj.idx == categoryIdx ? roundColumnChart.reDraw(_obj.data) : null;
     </script>
   </body>
 </html>
