@@ -5,34 +5,22 @@
       {
         "category": "Research",
         "value": 80,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(0)"
-        }
+        "full": 100
       },
       {
         "category": "Marketing",
         "value": 35,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(1)"
-        }
+        "full": 100
       },
       {
         "category": "Distribution",
         "value": 92,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(2)"
-        }
+        "full": 100
       },
       {
         "category": "Human Resources",
         "value": 68,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(3)"
-        }
+        "full": 100
       }
     ]
   },
@@ -40,36 +28,24 @@
     "idx": "2",
     "data": [
       {
-        "category": "Research2",
+        "category": "Research",
         "value": 80,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(0)"
-        }
+        "full": 100
       },
       {
-        "category": "Marketing2",
+        "category": "Marketing",
         "value": 15,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(1)"
-        }
+        "full": 100
       },
       {
-        "category": "Distribution2",
+        "category": "Distribution",
         "value": 52,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(2)"
-        }
+        "full": 100
       },
       {
-        "category": "Human Resources2",
+        "category": "Human Resources",
         "value": 18,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(3)"
-        }
+        "full": 100
       }
     ]
   },
@@ -77,36 +53,24 @@
     "idx": "3",
     "data": [
       {
-        "category": "Research3",
+        "category": "Research",
         "value": 50,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(0)"
-        }
+        "full": 100
       },
       {
-        "category": "Marketing3",
+        "category": "Marketing",
         "value": 95,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(1)"
-        }
+        "full": 100
       },
       {
-        "category": "Distribution3",
+        "category": "Distribution",
         "value": 12,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(2)"
-        }
+        "full": 100
       },
       {
-        "category": "Human Resources3",
+        "category": "Human Resources",
         "value": 55,
-        "full": 100,
-        "columnSettings": {
-          "fill": "chart.get('colors').getIndex(3)"
-        }
+        "full": 100
       }
     ]
   }

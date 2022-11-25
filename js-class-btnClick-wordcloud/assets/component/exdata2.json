@@ -1,0 +1,92 @@
+[
+  {
+    "idx": "1",
+    "data": [
+      {
+        "category": "AAA",
+        "value": 80,
+        "full": 100
+      },
+      {
+        "category": "AA",
+        "value": 35,
+        "full": 100
+      },
+      {
+        "category": "A",
+        "value": 92,
+        "full": 100
+      },
+      {
+        "category": "BBB",
+        "value": 92,
+        "full": 100
+      },
+      {
+        "category": "CCC",
+        "value": 68,
+        "full": 100
+      }
+    ]
+  },
+  {
+    "idx": "2",
+    "data": [
+      {
+        "category": "AAA",
+        "value": 40,
+        "full": 100
+      },
+      {
+        "category": "AA",
+        "value": 15,
+        "full": 100
+      },
+      {
+        "category": "A",
+        "value": 12,
+        "full": 100
+      },
+      {
+        "category": "BBB",
+        "value": 12,
+        "full": 100
+      },
+      {
+        "category": "CCC",
+        "value": 28,
+        "full": 100
+      }
+    ]
+  },
+  {
+    "idx": "3",
+    "data": [
+      {
+        "category": "AAA",
+        "value": 80,
+        "full": 100
+      },
+      {
+        "category": "AA",
+        "value": 45,
+        "full": 100
+      },
+      {
+        "category": "A",
+        "value": 62,
+        "full": 100
+      },
+      {
+        "category": "BBB",
+        "value": 72,
+        "full": 100
+      },
+      {
+        "category": "CCC",
+        "value": 88,
+        "full": 100
+      }
+    ]
+  }
+]
