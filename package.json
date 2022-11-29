@@ -1,5 +1,13 @@
 {
   "dependencies": {
-    "@amcharts/amcharts5": "^5.2.33"
+    "@amcharts/amcharts5": "^5.2.35"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.2",
+    "@babel/node": "^7.20.2",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.0"
   }
 }
