@@ -17,9 +17,8 @@
       <button>검색</button>
     </form>
     <div class="btn-wrap">
-      <button type="button" class="js-data-button" data-idx="1">데이터1</button>
-      <button type="button" class="js-data-button" data-idx="2">데이터2</button>
-      <button type="button" class="js-data-button" data-idx="3">데이터3</button>
+      <button type="button" class="js-data-button" data-idx="1">초기버튼 1</button>
+      <button type="button" class="js-data-button" data-idx="2">초기버튼 2</button>
     </div>
     <div id="chartDiv" style="width: 500px; height: 500px"></div>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
@@ -214,6 +213,13 @@
           this.$btnWrap = document.querySelector('.btn-wrap');
         }
 
+        get button() {
+          return this._button;
+        }
+        set button(_$btnEl) {
+          this._button = _$btnEl;
+        }
+
         set data(_bindData) {
           _bindData && this.removeButtons();
           _bindData && this.drawButtons(_bindData);
@@ -221,26 +227,40 @@
 
         removeButtons() {
           for (let i = 0; i < this.button.length; i++) {
-            this.$btnWrap.removeChild(this.button[i]);
+            this.$btnWrap.removeChild(this._button[i]);
           }
         }
 
         drawButtons(_bindData) {
-          _bindData.filter((_item) => {
+          _bindData.filter((_item, _idx) => {
             let $btnEl = document.createElement('button');
             $btnEl.setAttribute('type', 'button');
             $btnEl.setAttribute('class', 'js-data-button');
-            $btnEl.setAttribute(`data-idx`, `${_item.idx}`);
-            $btnEl.innerHTML = `데이터${_item.idx} 차트`;
+            $btnEl.setAttribute(`data-idx`, `${_idx + 1}`);
+            $btnEl.innerHTML = `데이터${_idx + 1} 차트`;
             this.$btnWrap.append($btnEl);
           });
+          this.button = this.$btnWrap.children;
         }
       }
+
+      /*
+      class ClickFilterButton extends DrawFilterButtons {
+        reDrawChart() {
+          // 데이터 값이 바뀔때
+          let $btns = document.querySelectorAll('.js-data-button');
+          for (let i = 0; i < $btns.length; i++) {
+            $btns[i].addEventListener('click', function () {
+              roundColumnChart.reDraw(_data[i].data);
+            });
+          }
+        }
+      }
+      */
     </script>
     <script>
       var drawFilterButtons = new DrawFilterButtons();
       var roundColumnChart = new RoundColumnChart();
-      var qwer;
 
       var para = document.location.href.split('?');
       var locationFile = 'exdata.json';
@@ -249,7 +269,7 @@
         para[1].split('=')[1] == '1' ? (locationFile = 'exdata2.json') : null;
       }
 
-      // 기본 검색조건 데이터 (가정)
+      // locations별 기본 검색조건 데이터
       fetch('assets/JSON/' + locationFile)
         .then((response) => response.json())
         .then((_data) => {
@@ -264,13 +284,6 @@
               roundColumnChart.reDraw(_data[i].data);
             });
           }
-        });
-
-      // 두번째 검색조건 데이터 (가정)
-      fetch('assets/JSON/exdata2.json')
-        .then((response) => response.json())
-        .then((_data) => {
-          // console.log(_data);
         });
     </script>
     <!-- <script>
