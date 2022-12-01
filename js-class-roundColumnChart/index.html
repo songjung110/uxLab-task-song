@@ -257,6 +257,35 @@
         }
       }
       */
+
+      class Person {
+        constructor(_age, _name, _mbti) {
+          this.age = _age;
+          this.name = _name;
+          this._mbti = _mbti;
+        }
+
+        get mbti() {
+          return this._mbti;
+        }
+
+        set mbti(_mbti) {
+          if (_mbti.length > 5) {
+            this._mbti = '';
+          }
+          this._mbti = _mbti;
+        }
+
+        im() {
+          console.log('im ' + this.age + ' years old');
+          console.log('name is ' + this.name);
+          console.log('mbti is ...' + this._mbti);
+        }
+      }
+
+      let person = new Person(60, 'john', "don't know");
+      person.mbti = 'infp';
+      person.im();
     </script>
     <script>
       var drawFilterButtons = new DrawFilterButtons();
@@ -270,7 +299,7 @@
       }
 
       // locations별 기본 검색조건 데이터
-      fetch('assets/JSON/' + locationFile)
+      fetch('https://songjung110.github.io/uxLab-task-song-json/' + locationFile)
         .then((response) => response.json())
         .then((_data) => {
           drawFilterButtons.removeButtons();
