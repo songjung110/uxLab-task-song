@@ -244,20 +244,6 @@
         }
       }
 
-      /*
-      class ClickFilterButton extends DrawFilterButtons {
-        reDrawChart() {
-          // 데이터 값이 바뀔때
-          let $btns = document.querySelectorAll('.js-data-button');
-          for (let i = 0; i < $btns.length; i++) {
-            $btns[i].addEventListener('click', function () {
-              roundColumnChart.reDraw(_data[i].data);
-            });
-          }
-        }
-      }
-      */
-
       class Person {
         constructor(_age, _name, _mbti) {
           this.age = _age;
@@ -282,8 +268,6 @@
           console.log('im ' + this.age + ' years old\nname is ' + this.name + '\nmbti is ...' + this._mbti);
         }
       }
-      let person = new Person(60, 'john', "don't know");
-      person.im();
 
       // 메서드 오버라이딩 - 상속 클래스내의 메서드를 "확장"하여 재사용하는 방법.
       // 생성자 오버라이딩 - 자체 생성자에서 "추가로 생성자를 선언".
@@ -292,9 +276,11 @@
         // 상속 클래스의 생성자에는 반드시 super(...) 를 호출해야함.
         // ㄴ 추가될 this. 를 사용하기전에 반드시 사용해야함.
         constructor(...args) {
-          // console.log(...args); // 부모 클래스에서 지정한 "매개변수들로 받아온" 상속클래스의 인자값을 호출함
+          // 부모 클래스에서 지정한 "매개변수들로 받아온" 상속클래스의 인자값을 호출함
+          // console.log(...args);
           super(...args);
           this.work = 'play the piano';
+          this.age = '28';
         }
 
         // 부모 메서드를 토대로 일부 기능만 변경, 확장하고 싶을 때
@@ -304,11 +290,8 @@
         im() {
           super.im(); // 부모클래스의 im을 호출
           console.log(this.work);
-          // this.__proto__.im();
         }
       }
-      let piannist = new Piannist(28, 'Jan Lisiecki', "don't know");
-      piannist.im();
     </script>
     <script>
       var drawFilterButtons = new DrawFilterButtons();
@@ -337,44 +320,12 @@
             });
           }
         });
+
+      let person = new Person(60, 'john', "don't know");
+      person.im();
+      console.log('------------------');
+      let piannist = new Piannist(28, 'Jan Lisiecki', "don't know");
+      piannist.im();
     </script>
-    <!-- <script>
-      let roundColumnChart = new RoundColumnChart();
-      roundColumnChart.data = [];
-
-      fetch('assets/JSON/exdata.json')
-        .then((response) => response.json())
-        .then((_data) => {
-          roundColumnChart.reDraw(_data[0].data);
-        });
-
-      // 데이터 값이 바뀔때
-      let $btns = document.querySelectorAll('.js-data-button');
-      for (let i = 0; i < $btns.length; i++) {
-        let queryIdx;
-        let categoryIdx;
-        let src;
-
-        $btns[i].addEventListener('click', (_ev) => {
-          if ($btns[i].attributes['data-idx']) {
-            // 카테고리명이 바뀌지않는, 데이터 값만 바뀌는 JSON 호출
-            src = 'exdata.json';
-            queryIdx = $btns[i].getAttribute('data-idx');
-          } else if ($btns[i].attributes['data-category']) {
-            // 카테고리명 + 데이터 값 전체적으로 바뀌는 JSON 호출
-            src = 'exdata2.json';
-            queryIdx = $btns[i].getAttribute('data-category');
-          }
-
-          fetch('assets/JSON/' + src)
-            .then((response) => response.json())
-            .then((_data) => {
-              _data.filter(function (_obj) {
-                _obj.idx == queryIdx ? roundColumnChart.reDraw(_obj.data) : null;
-              });
-            });
-        });
-      }
-    </script> -->
   </body>
 </html>
