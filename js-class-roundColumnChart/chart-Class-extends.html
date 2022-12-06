@@ -26,6 +26,15 @@
     <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script>
+      /*
+        확장 (extends) 클래스의 기준
+        새로운 this. 가 추가되어야 할 때...로 하기에는 너무 광범위해짐.
+        차라리 Demos 에 올라온 차트를 기준으로 class 하나씩 생성하는편이 더 깔끔할거같고,
+        바뀌어야하는 옵션값있을경우
+        extends 를 사용하는편이.. 
+        파라미터로 받은다음 ... 으로 옵션값을 머지하는방식으로 
+        extends Class 를 구성하는편이 나을거같음.
+      */
       class ChartColumn {
         constructor(_xOptions) {
           var root = am5.Root.new('chartDiv');
@@ -89,7 +98,7 @@
               sequencedInterpolation: true,
               categoryXField: 'country',
               tooltip: am5.Tooltip.new(root, {
-                labelText: '{valueY}',
+                labelText: '{country}: {valueY}',
               }),
             })
           );
