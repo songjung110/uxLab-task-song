@@ -12,7 +12,7 @@
     <script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script type="text/javascript" src="https://cdn.amcharts.com/lib/3/serial.js"></script>
     <style>
-      strong {
+      strong.title {
         display: block;
         margin-bottom: 10px;
       }
@@ -36,7 +36,7 @@
   </head>
   <body>
     <div>
-      <strong>Class 제어법</strong>
+      <strong class="title">Class 제어법</strong>
       <button type="button" class="class-chart-container__toggle">
         <div id="chartDiv_ver3_class" class="class-chart-container__chart" style="height: 150px; width: 610px"></div>
       </button>
@@ -46,22 +46,28 @@
             this.chartDiv = chartId;
             this.cateGraphs = new Array();
             this.cateDatas = new Array();
-            this.options = new Object();
-            this.legend = false;
+            this.options = {
+              legend: true,
+            };
           }
-
           // 커스텀 옵션
           get options() {
             return this._options;
           }
           set options(options) {
             this._options = options;
+            this.draw(this.chartDiv);
           }
-          // 카테고리 갯수 / 카테고리 명이 바뀌어야 할 때 그려주는 메서드
-          reCategorying(categorys) {
+
+          // 커스텀 옵션
+          get cateGraphs() {
+            return this._cateGraphs;
+          }
+          set cateGraphs(categorys) {
+            this._cateGraphs = [];
             for (let i = 0; i < categorys.length; i++) {
               this.cateGraphs.push({
-                // balloonText: "<strong>[[title]]</strong> : <span style='font-size: 12px;'>[[value]]</span> <span style='color:#909090'>([[percents]]%)</span>",
+                balloonText: "<strong>[[title]]: <span style='font-size: 12px;'>[[value]]</span> <span style='color:#909090'></span></strong>",
                 bullet: 'round',
                 bulletBorderAlpha: 1,
                 bulletBorderThickness: 1,
@@ -76,12 +82,36 @@
             }
           }
 
+          // // 카테고리 갯수 / 카테고리 명이 바뀌어야 할 때 그려주는 메서드
+          // reCategorying(categorys) {
+          //   this.cateGraphs = [];
+          //   for (let i = 0; i < categorys.length; i++) {
+          //     this.cateGraphs.push({
+          //       balloonText: "<strong>[[title]]: <span style='font-size: 12px;'>[[value]]</span> <span style='color:#909090'></span></strong>",
+          //       bullet: 'round',
+          //       bulletBorderAlpha: 1,
+          //       bulletBorderThickness: 1,
+          //       bulletSize: 6,
+          //       lineThickness: 1,
+          //       stackable: false,
+          //       id: 'AmGraph-' + (i + 1),
+          //       title: categorys[i],
+          //       dashLengthField: 'dashLength',
+          //       valueField: 'column-' + (i + 1),
+          //     });
+          //   }
+          // }
+
           // 데이터 프로바이더를 다시 불러와 그려주는 메서드
-          reDataBinding(datas) {
-            this.cateDatas = datas;
+          reDataBinding(data) {
+            this.cateDatas = [];
+            this.cateDatas = data;
+            this.cateGraphs = categorys;
+            // this.reCategorying(categorys);
             this.draw(this.chartDiv);
           }
 
+          // 차트 데이터 표현 영역의 색상 변경시
           reColoring(colors) {
             /*
                 string - 단일 색상코드 넣을 경우
@@ -100,7 +130,11 @@
             this.chart.validateData();
           }
 
+          // 차트 그리는 메서드
           draw(chartId) {
+            // 외부 옵션이 있을 경우, 외부 옵션을 통해 차트 내의 설정을 변경함
+            if (this._options) this.options.legend = this._options.legend;
+
             this.chart = AmCharts.makeChart(chartId, {
               type: 'serial',
               categoryField: 'category',
@@ -171,7 +205,7 @@
                 animationDuration: 0,
               },
               legend: {
-                enabled: this.legend,
+                enabled: this.options.legend,
                 align: 'center',
                 autoMargins: false,
                 color: '#999999',
@@ -194,6 +228,7 @@
         }
 
         let categorys = ['[플랜테이블] 왕교자', '[풀무원] 크로엣지 피자', '[비비고] 냉동국물 3종'];
+        let categorys2 = ['[CJ] 왕교자', '[QQQ] 크로엣지 피자', '[AAA] 냉동국물 3종'];
         let datas = [
           {
             category: '1',
@@ -268,6 +303,80 @@
             'column-3': 400,
           },
         ];
+        let datas2 = [
+          {
+            category: '1',
+            'column-1': 1234,
+            'column-2': 4321,
+            'column-3': 2424,
+          },
+          {
+            category: '2',
+            'column-1': 3123,
+            'column-2': 4242,
+            'column-3': 4134,
+          },
+          {
+            category: '3',
+            'column-1': 1234,
+            'column-2': 4321,
+            'column-3': 1111,
+          },
+          {
+            category: '4',
+            'column-1': 2222,
+            'column-2': 3333,
+            'column-3': 4444,
+          },
+          {
+            category: '5',
+            'column-1': 2112,
+            'column-2': 5138,
+            'column-3': 4100,
+          },
+          {
+            category: '6',
+            'column-1': 1112,
+            'column-2': 5138,
+            'column-3': 4100,
+          },
+          {
+            category: '7',
+            'column-1': 1112,
+            'column-2': 5138,
+            'column-3': 4100,
+          },
+          {
+            category: '8',
+            'column-1': 3112,
+            'column-2': 5138,
+            'column-3': 4100,
+          },
+          {
+            category: '9',
+            'column-1': 2112,
+            'column-2': 5138,
+            'column-3': 4100,
+          },
+          {
+            category: '10',
+            'column-1': 1512,
+            'column-2': 1538,
+            'column-3': 1400,
+          },
+          {
+            category: '11',
+            'column-1': 2112,
+            'column-2': 5318,
+            'column-3': 4010,
+          },
+          {
+            category: '12',
+            'column-1': 1112,
+            'column-2': 5138,
+            'column-3': 4100,
+          },
+        ];
         let options = {
           legend: false,
         };
@@ -278,8 +387,16 @@
         // 아래처럼 변경
         let chartDraw = new ChartDraw('chartDiv_ver3_class');
         chartDraw.options = options;
-        chartDraw.reCategorying(categorys);
-        chartDraw.reDataBinding(datas);
+        // chartDraw.reCategorying(categorys); // 카테고리만 변경시킬때
+        chartDraw.cateGraphs = categorys;
+        chartDraw.reDataBinding(datas, categorys);
+
+        // 비동기식으로 데이터 변경시, 차트가 새로 그려지는지 테스트
+        setTimeout(function () {
+          chartDraw.cateGraphs = categorys2;
+          chartDraw.reDataBinding(datas2);
+          console.log('DATA CHANGE!');
+        }, 2000);
 
         document.querySelector('.class-chart-container__toggle').addEventListener('click', function () {
           if (this.classList.contains('is-active')) {
@@ -291,193 +408,6 @@
           }
         });
       </script>
-      <!-- <script>
-        (function () {
-          var chart = AmCharts.makeChart('chartDiv_ver3_class', {
-            type: 'serial',
-            categoryField: 'category',
-            addClassNames: true,
-            columnWidth: 0.32,
-            autoMarginOffset: 10,
-            marginRight: 10,
-            marginTop: 15,
-            colors: ['#ef151e', '#ff9700', '#006ecd'],
-            color: '#555555',
-            fontSize: 12,
-            categoryAxis: {
-              labelOffset: -2,
-              equalSpacing: true,
-              gridPosition: 'start',
-              color: '#666666',
-              fontSize: 11,
-              // "parseDates": true,
-              axisColor: '#ececec',
-              gridThickness: 0,
-              autoGridCount: false,
-              markPeriodChange: false,
-              labelFunction: function ($txt, $date, $axis) {
-                /* 월별일때 */
-                if ($txt.indexOf('~') > 0) {
-                  var year = $txt.split('-')[0];
-                  var days = $txt.split('-')[1];
-                  var result = year + days;
-                  return result;
-                } else {
-                  return $txt;
-                }
-              },
-            },
-            chartCursor: {
-              enabled: true,
-              animationDuration: 0,
-              categoryBalloonColor: '#505050 ',
-              categoryBalloonDateFormat: 'MM-DD',
-              cursorAlpha: 0.1,
-              cursorColor: '#000000',
-              fullWidth: true,
-            },
-            trendLines: [],
-            graphs: [
-              {
-                balloonText: "<strong>[[title]]</strong> : <span style='font-size: 14px;'>[[value]]</span> <span style='color:#909090'>([[percents]]%)</span>",
-                // balloonFunction: get_chartBalloonValueTextAllLine,
-                bullet: 'round',
-                bulletBorderAlpha: 0,
-                bulletSize: 8,
-                lineThickness: 2,
-                stackable: false,
-                id: 'AmGraph-1',
-                title: '[플랜테이블] 왕교자',
-                dashLengthField: 'dashLength',
-                valueField: 'column-1',
-              },
-              {
-                balloonText: "<strong>[[title]]</strong> : <span style='font-size: 14px;'>[[value]]</span> <span style='color:#909090'>([[percents]]%)</span>",
-                // balloonFunction: get_chartBalloonValueTextAllLine,
-                bullet: 'round',
-                bulletBorderAlpha: 0,
-                bulletSize: 8,
-                stackable: false,
-                id: 'AmGraph-2',
-                lineThickness: 2,
-                title: '[풀무원] 크로엣지 피자',
-                dashLengthField: 'dashLength',
-                valueField: 'column-2',
-              },
-              {
-                balloonText: "<strong>[[title]]</strong> : <span style='font-size: 14px;'>[[value]]</span> <span style='color:#909090'>([[percents]]%)</span>",
-                // balloonFunction: get_chartBalloonValueTextAllLine,
-                bullet: 'round',
-                bulletBorderAlpha: 0,
-                bulletSize: 8,
-                stackable: false,
-                id: 'AmGraph-3',
-                lineThickness: 2,
-                title: '[비비고] 냉동국물 3종',
-                dashLengthField: 'dashLength',
-                valueField: 'column-3',
-              },
-            ],
-            guides: [],
-            valueAxes: [
-              {
-                id: 'ValueAxis-1',
-                stackType: 'regular',
-                zeroGridAlpha: 0,
-                axisThickness: 0,
-                color: '#999999',
-                fontSize: 10,
-                dashLength: 4,
-                gridAlpha: 1,
-                gridColor: '#eeeeee',
-                tickLength: 0,
-                title: '',
-              },
-            ],
-            allLabels: [],
-            balloon: {
-              fillAlpha: 0.95,
-              borderThickness: 1,
-              animationDuration: 0,
-            },
-            legend: {
-              enabled: true,
-              align: 'center',
-              autoMargins: false,
-              color: '#999999',
-              markerType: 'circle',
-              marginLeft: 0,
-              marginRight: 0,
-              marginTop: 10,
-              markerSize: 8,
-              fontSize: 11,
-              position: 'top',
-              spacing: 15,
-              // valueFunction: get_chartLegendValueText,
-              valueWidth: 60,
-              verticalGap: 0,
-              equalWidths: false,
-            },
-            titles: [],
-            dataProvider: [
-              {
-                category: '2021-09-01 ~ 2021-09-30',
-                'column-1': 112,
-                'column-2': 538,
-                'column-3': 400,
-                dashLength: 4, //비교기간 활성화시의 비교기간
-              },
-              {
-                category: '2021-10-01 ~ 2021-10-30',
-                'column-1': 312,
-                'column-2': 538,
-                'column-3': 400,
-                dashLength: 4, //비교기간 활성화시의 비교기간
-              },
-              {
-                category: '2021-11-01 ~ 2021-11-30',
-                'column-1': 212,
-                'column-2': 538,
-                'column-3': 400,
-                dashLength: 4, //비교기간 활성화시의 비교기간
-              },
-              {
-                category: '2021-12-01 ~ 2021-12-30',
-                'column-1': 512,
-                'column-2': 538,
-                'column-3': 400,
-                dashLength: 0,
-              },
-              {
-                category: '2022-01-01 ~ 2022-01-30',
-                'column-1': 212,
-                'column-2': 538,
-                'column-3': 400,
-                dashLength: 0,
-              },
-              {
-                category: '2022-02-01 ~ 2022-02-30',
-                'column-1': 112,
-                'column-2': 538,
-                'column-3': 400,
-                dashLength: 0,
-              },
-            ],
-          });
-          chart.addListener('clickGraphItem', function ($e) {
-            popupMngr.open('#popup_rel_info_detail');
-          });
-
-          document.querySelector('.class-chart-container__toggle').addEventListener('click', function () {
-            this.classList.add('is-active');
-            chart.colors = [];
-            for (let i = 0; i < chart.graphs.length; i++) {
-              chart.colors.push('#ff9700');
-            }
-            chart.validateData();
-          });
-        })();
-      </script> -->
     </div>
   </body>
 </html>
