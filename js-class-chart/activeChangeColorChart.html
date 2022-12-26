@@ -334,16 +334,16 @@
             'column-3': 400,
           },
         ];
-        // let options = {
-        //   legend: true,
-        // };
+        let options = {
+          legend: true,
+        };
 
         // let chartDraw = new ChartDraw('chartDiv_ver3_class', categorys, datas, options);
         // 타겟 엘리먼트 (정적인 내용은 첫 인스턴스 생성때 필수 인자값으로 받음)
         // "데이터 / 카테고리 / 컬러 등" 데이터 바인딩 시 동적으로 바뀌어야하는 부분은 전부 "메서드로"
         // 아래처럼 변경
         let chartDraw = new ChartDraw('chartDiv_ver3_class');
-        // chartDraw.options = options;
+        chartDraw.options = options;
         /*
           chartDraw.reCategorying(categorys); // 카테고리만 변경시킬때
           chartDraw.reDataBinding(datas, categorys);
@@ -353,6 +353,7 @@
         let asynchronous = setInterval(function () {
           // 로딩 삭제
           loacingUiRemove();
+
           // ----------------- 임의 데이터 바인딩 영역 -----------------
           let datas2 = new Array();
           for (let months = 1; months <= 12; months++) {
@@ -364,7 +365,7 @@
             };
             datas2.push(datas2Obj);
           }
-          // ----------------- // 임의 데이터 바인딩 영역 -----------------
+          // ----------------- // 임의 데이터 바인딩 영역 -----------------.
 
           chartDraw.reCategorying(categorys2); // 카테고리만 변경시킬때
           chartDraw.reDataBinding(datas2, categorys2);
@@ -379,9 +380,11 @@
         document.querySelector('.class-chart-container__toggle').addEventListener('click', function () {
           if (this.classList.contains('is-active')) {
             this.classList.remove('is-active');
+
             chartDraw.reColoring(['#ef151e', '#ff9700', '#006ecd']);
           } else {
             this.classList.add('is-active');
+
             chartDraw.reColoring('#ff9700');
           }
         });
