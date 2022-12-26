@@ -47,7 +47,7 @@
             this.cateGraphs = new Array();
             this.cateDatas = new Array();
             this.options = {
-              legend: true,
+              legend: false,
             };
           }
           // 커스텀 옵션
@@ -59,12 +59,9 @@
             this.draw(this.chartDiv);
           }
 
-          // 커스텀 옵션
-          get cateGraphs() {
-            return this._cateGraphs;
-          }
-          set cateGraphs(categorys) {
-            this._cateGraphs = [];
+          // // 카테고리 갯수 / 카테고리 명이 바뀌어야 할 때 그려주는 메서드
+          reCategorying(categorys) {
+            this.cateGraphs = [];
             for (let i = 0; i < categorys.length; i++) {
               this.cateGraphs.push({
                 balloonText: "<strong>[[title]]: <span style='font-size: 12px;'>[[value]]</span> <span style='color:#909090'></span></strong>",
@@ -80,34 +77,14 @@
                 valueField: 'column-' + (i + 1),
               });
             }
+            this.draw(this.chartDiv);
           }
 
-          // // 카테고리 갯수 / 카테고리 명이 바뀌어야 할 때 그려주는 메서드
-          // reCategorying(categorys) {
-          //   this.cateGraphs = [];
-          //   for (let i = 0; i < categorys.length; i++) {
-          //     this.cateGraphs.push({
-          //       balloonText: "<strong>[[title]]: <span style='font-size: 12px;'>[[value]]</span> <span style='color:#909090'></span></strong>",
-          //       bullet: 'round',
-          //       bulletBorderAlpha: 1,
-          //       bulletBorderThickness: 1,
-          //       bulletSize: 6,
-          //       lineThickness: 1,
-          //       stackable: false,
-          //       id: 'AmGraph-' + (i + 1),
-          //       title: categorys[i],
-          //       dashLengthField: 'dashLength',
-          //       valueField: 'column-' + (i + 1),
-          //     });
-          //   }
-          // }
-
           // 데이터 프로바이더를 다시 불러와 그려주는 메서드
-          reDataBinding(data) {
+          reDataBinding(data, categorys) {
             this.cateDatas = [];
             this.cateDatas = data;
-            this.cateGraphs = categorys;
-            // this.reCategorying(categorys);
+            this.reCategorying(categorys);
             this.draw(this.chartDiv);
           }
 
@@ -303,99 +280,38 @@
             'column-3': 400,
           },
         ];
-        let datas2 = [
-          {
-            category: '1',
-            'column-1': 1234,
-            'column-2': 4321,
-            'column-3': 2424,
-          },
-          {
-            category: '2',
-            'column-1': 3123,
-            'column-2': 4242,
-            'column-3': 4134,
-          },
-          {
-            category: '3',
-            'column-1': 1234,
-            'column-2': 4321,
-            'column-3': 1111,
-          },
-          {
-            category: '4',
-            'column-1': 2222,
-            'column-2': 3333,
-            'column-3': 4444,
-          },
-          {
-            category: '5',
-            'column-1': 2112,
-            'column-2': 5138,
-            'column-3': 4100,
-          },
-          {
-            category: '6',
-            'column-1': 1112,
-            'column-2': 5138,
-            'column-3': 4100,
-          },
-          {
-            category: '7',
-            'column-1': 1112,
-            'column-2': 5138,
-            'column-3': 4100,
-          },
-          {
-            category: '8',
-            'column-1': 3112,
-            'column-2': 5138,
-            'column-3': 4100,
-          },
-          {
-            category: '9',
-            'column-1': 2112,
-            'column-2': 5138,
-            'column-3': 4100,
-          },
-          {
-            category: '10',
-            'column-1': 1512,
-            'column-2': 1538,
-            'column-3': 1400,
-          },
-          {
-            category: '11',
-            'column-1': 2112,
-            'column-2': 5318,
-            'column-3': 4010,
-          },
-          {
-            category: '12',
-            'column-1': 1112,
-            'column-2': 5138,
-            'column-3': 4100,
-          },
-        ];
-        let options = {
-          legend: false,
-        };
+
+        // let options = {
+        //   legend: false,
+        // };
 
         // let chartDraw = new ChartDraw('chartDiv_ver3_class', categorys, datas, options);
         // 타겟 엘리먼트 (정적인 내용은 첫 인스턴스 생성때 필수 인자값으로 받음)
-        // 데이터 / 카테고리 / 컬러 등 데이터 바인딩 시 동적으로 바뀌어야하는 부분은 전부 "메서드로"
+        // "데이터 / 카테고리 / 컬러 등" 데이터 바인딩 시 동적으로 바뀌어야하는 부분은 전부 "메서드로"
         // 아래처럼 변경
         let chartDraw = new ChartDraw('chartDiv_ver3_class');
-        chartDraw.options = options;
-        // chartDraw.reCategorying(categorys); // 카테고리만 변경시킬때
-        chartDraw.cateGraphs = categorys;
+        // chartDraw.options = options;
+        chartDraw.reCategorying(categorys); // 카테고리만 변경시킬때
         chartDraw.reDataBinding(datas, categorys);
 
         // 비동기식으로 데이터 변경시, 차트가 새로 그려지는지 테스트
-        setTimeout(function () {
-          chartDraw.cateGraphs = categorys2;
-          chartDraw.reDataBinding(datas2);
-          console.log('DATA CHANGE!');
+        setInterval(function () {
+          // ----------------- 임의 데이터 바인딩 영역 -----------------
+          let datas2 = new Array();
+          for (let months = 1; months <= 12; months++) {
+            let datas2Obj = {
+              category: months,
+              'column-1': (Math.random() * 1000).toFixed(0),
+              'column-2': (Math.random() * 1000).toFixed(0),
+              'column-3': (Math.random() * 1000).toFixed(0),
+            };
+            datas2.push(datas2Obj);
+          }
+          // ----------------- // 임의 데이터 바인딩 영역 -----------------
+
+          chartDraw.reCategorying(categorys2); // 카테고리만 변경시킬때
+          chartDraw.reDataBinding(datas2, categorys2);
+          console.log('DATA CHANGE! - setInterval');
         }, 2000);
 
         document.querySelector('.class-chart-container__toggle').addEventListener('click', function () {
