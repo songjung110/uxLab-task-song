@@ -60,7 +60,7 @@
         }
 
         50% {
-          background-color: rgba(220, 220, 220, 1);
+          background-color: rgba(210, 210, 210, 1);
           border-color: rgba(230, 230, 230, 1);
         }
 
@@ -77,7 +77,7 @@
         }
 
         50% {
-          background-color: rgba(220, 220, 220, 1);
+          background-color: rgba(210, 210, 210, 1);
           border-color: rgba(230, 230, 230, 1);
         }
 
@@ -86,11 +86,6 @@
           border-color: rgba(230, 230, 230, 1);
         }
       }
-
-      /* .skeleton-list-item {
-        -webkit-animation: skeleton-gradient 1.8s infinite ease-in-out;
-        animation: skeleton-gradient 1.8s infinite ease-in-out;
-      } */
     </style>
   </head>
   <body>
@@ -339,9 +334,8 @@
             'column-3': 400,
           },
         ];
-
         // let options = {
-        //   legend: false,
+        //   legend: true,
         // };
 
         // let chartDraw = new ChartDraw('chartDiv_ver3_class', categorys, datas, options);
@@ -349,8 +343,8 @@
         // "데이터 / 카테고리 / 컬러 등" 데이터 바인딩 시 동적으로 바뀌어야하는 부분은 전부 "메서드로"
         // 아래처럼 변경
         let chartDraw = new ChartDraw('chartDiv_ver3_class');
+        // chartDraw.options = options;
         /*
-          chartDraw.options = options;
           chartDraw.reCategorying(categorys); // 카테고리만 변경시킬때
           chartDraw.reDataBinding(datas, categorys);
         */
