@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Class charts</title>
+    <title>JS Class charts</title>
     <!-- <script type="module" src="assets/common/main.js"></script> -->
     <!-- <script type="module" src="./assets/component/class-ClickBtn.js"></script> -->
 
@@ -100,16 +100,14 @@
             this.chartDiv = chartId;
             this.cateGraphs = new Array();
             this.cateDatas = new Array();
-            this.options = {
-              legend: false,
-            };
+            this.options = { legend: false };
           }
           // 커스텀 옵션
           get options() {
             return this._options;
           }
           set options(options) {
-            this._options = options;
+            this._options = { ...this._options, ...options };
             this.draw(this.chartDiv);
           }
 
@@ -346,7 +344,8 @@
         chartDraw.options = options;
         /*
           chartDraw.reCategorying(categorys); // 카테고리만 변경시킬때
-          chartDraw.reDataBinding(datas, categorys);
+          chartDraw.reDataBinding(datas, categorys);  // 데이터 프로바이더(Y축)와 카테고리 (X축) 변경
+          chartDraw.reColoring(['#ef151e', '#ff9700', '#006ecd']); // 차트 카테고리별 컬러링
         */
 
         // 비동기식으로 데이터 변경시, 차트가 새로 그려지는지 테스트
