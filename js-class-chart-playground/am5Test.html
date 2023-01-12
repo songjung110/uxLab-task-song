@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <div id="chartdiv"></div>
+    <script>
+      /**
+       * ---------------------------------------
+       * This demo was created using amCharts 5.
+       *
+       * For more information visit:
+       * https://www.amcharts.com/
+       *
+       * Documentation is available at:
+       * https://www.amcharts.com/docs/v5/
+       * ---------------------------------------
+       */
+
+      // Create root element
+      // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+      var root = am5.Root.new('chartdiv');
+
+      // Set themes
+      // https://www.amcharts.com/docs/v5/concepts/themes/
+      root.setThemes([am5themes_Animated.new(root)]);
+
+      var data = {
+        name: 'Root',
+        value: 0,
+        children: [
+          {
+            name: '백내장',
+            children: [
+              {
+                name: '단초점렌즈',
+                value: 30,
+                linkWith: ['다초점렌즈'],
+              },
+              {
+                name: '신포니',
+                value: 30,
+                linkWith: ['다초점렌즈'],
+              },
+              {
+                name: '펨토초레이저',
+                value: 30,
+                linkWith: ['다초점렌즈'],
+              },
+              {
+                name: 'OO병원',
+                value: 30,
+                linkWith: ['다초점렌즈'],
+                nodeSettings: {
+                  fill: am5.color(0x92d050),
+                },
+              },
+              {
+                name: 'ㅁㅁ의원',
+                value: 30,
+                linkWith: ['다초점렌즈'],
+                nodeSettings: {
+                  fill: am5.color(0x92d050),
+                },
+              },
+              {
+                name: '빅투스레이저',
+                value: 10,
+              },
+              {
+                name: '야그레이저',
+                value: 10,
+              },
+              {
+                name: '기타2',
+                value: 10,
+              },
+              {
+                name: '카탈리스',
+                value: 10,
+              },
+              {
+                name: '펨티스',
+                value: 10,
+              },
+              {
+                name: 'AA안과',
+                value: 10,
+                nodeSettings: {
+                  fill: am5.color(0x92d050),
+                },
+              },
+              {
+                name: 'BB의원',
+                value: 10,
+                nodeSettings: {
+                  fill: am5.color(0x92d050),
+                },
+              },
+              {
+                name: 'CC병원',
+                value: 10,
+                nodeSettings: {
+                  fill: am5.color(0x92d050),
+                },
+              },
+              {
+                name: 'DD병원',
+                value: 10,
+                nodeSettings: {
+                  fill: am5.color(0x92d050),
+                },
+              },
+            ],
+          },
+          {
+            name: '다초점렌즈',
+            children: [
+              {
+                name: '단초점렌즈',
+                value: 30,
+                linkWith: ['백내장'],
+              },
+              {
+                name: '펨토초',
+                value: 10,
+              },
+              {
+                name: '인공수정체공막고정술',
+                value: 10,
+              },
+              {
+                name: '연속초점',
+                value: 10,
+              },
+              {
+                name: '음파유화',
+                value: 10,
+              },
+              {
+                name: 'ㅇㅇ병원',
+                value: 10,
+                nodeSettings: {
+                  fill: am5.color(0x92d050),
+                },
+              },
+              {
+                name: 'ㅁㅁ의원',
+                value: 10,
+                nodeSettings: {
+                  fill: am5.color(0x92d050),
+                },
+              },
+            ],
+          },
+        ],
+      };
+
+      // Create wrapper container
+      var container = root.container.children.push(
+        am5.Container.new(root, {
+          width: am5.percent(100),
+          height: am5.percent(100),
+          layout: root.verticalLayout,
+        })
+      );
+
+      // Create series
+      // https://www.amcharts.com/docs/v5/charts/hierarchy/#Adding
+      var series = container.children.push(
+        am5hierarchy.ForceDirected.new(root, {
+          singleBranchOnly: false,
+          downDepth: 1,
+          topDepth: 1,
+          maxRadius: am5.percent(10),
+          minRadius: am5.percent(3),
+          valueField: 'value',
+          categoryField: 'name',
+          childDataField: 'children',
+          idField: 'name',
+          linkWithStrength: 0.3,
+          linkWithField: 'linkWith',
+          manyBodyStrength: -15,
+          centerStrength: 0.5,
+          nodePadding: 30,
+        })
+      );
+      series.circles.template.setAll({
+        templateField: 'nodeSettings',
+      });
+
+      series.get('colors').set('step', 1);
+      series.get('colors').set('colors', [
+        am5.color(0xff66cc),
+        am5.color(0xed7d31),
+        /* am5.color(0xff66cc), */
+        /* am5.color(0x4472c4), */
+      ]);
+      // // ... except for central node
+      // series.circles.template.adapters.add('colors', function (colors, target) {
+      //   return target.dataItem.get('depth') == 0 ? am5.color(0x4472c4) : colors;
+      // });
+
+      // ... except for central node
+      series.circles.template.adapters.add('fill', function (fill, target) {
+        if (target.dataItem.dataContext.nodeSettings) return fill; // nodeSettings 가 설정되어있을 경우 fill 먼저 return
+        if (target.dataItem.get('depth') > 1) return am5.color(0x4472c4); // nodeSetting X / 2뎁스일경우 무조건 0x4472c4 색상지정
+        return fill;
+      });
+      series.outerCircles.template.adapters.add('scale', function () {
+        return 1;
+      });
+      series.circles.template.adapters.add('radius', function (radius, target) {
+        return target.dataItem.get('depth') == 1 ? 55 : radius;
+      });
+
+      series.data.setAll([data]);
+      series.set('selectedDataItem', series.dataItems[0]);
+
+      // Make stuff animate on load
+      series.appear(1000, 100);
+    </script>
+
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      }
+
+      #chartdiv {
+        width: 100%;
+        height: 550px;
+      }
+    </style>
+  </body>
+</html>
