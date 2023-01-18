@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "@amcharts/amcharts5": "^5.2.35",
-    "@rsn-ux-lab/rsn_amcharts_custom": "^1.0.0"
+    "@amcharts/amcharts5": "^5.2.35"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
